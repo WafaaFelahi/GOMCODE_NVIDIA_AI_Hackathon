@@ -50,7 +50,7 @@ def _agent_specs() -> list:
             "description": (
                 "Analyze the market for this business: demand level, target customers, "
                 "main competitors in the area, typical price ranges, and local market gaps. "
-                "Use the Web Search tool for recent information."
+                "Rely on your own knowledge of the local market."
             ),
             "expected_output": "A concise market analysis with competitors and demand summary.",
             "use_search": True,
@@ -65,7 +65,8 @@ def _agent_specs() -> list:
                 "Based on the market analysis, recommend the 2-3 best areas/neighborhoods in the "
                 "target city for this business, with pros and cons of each, and give an initial "
                 "feasibility estimate: startup cost range and expected monthly running cost. "
-                "Use the Competitor Map Search tool to get REAL competitor data from OpenStreetMap."
+                "Rely on your knowledge of the city. Real competitor counts from OpenStreetMap "
+                "are shown to the user on the interactive map in the app."
             ),
             "expected_output": "2-3 recommended areas with pros/cons and an initial feasibility estimate.",
             "use_search": False,
@@ -110,12 +111,19 @@ EDITOR_SPEC = {
 
 
 def _pick_tools(spec: dict) -> list:
-    tools = []
-    if spec.get("use_search"):
-        tools.append(web_search)
-    if spec.get("use_map"):
-        tools.append(competitor_map_search)
-    return tools
+    # TEMP DEMO MODE: tool calling disabled (vLLM needs --enable-auto-tool-choice
+    # and --tool-call-parser flags to support it). The real competitor map is
+    # still shown live in the app UI (built directly, no LLM involved).
+    # Restore after the demo by re-enabling the code below AND serving vLLM with:
+    #   --enable-auto-tool-choice --tool-call-parser llama3_json
+    #
+    # tools = []
+    # if spec.get("use_search"):
+    #     tools.append(web_search)
+    # if spec.get("use_map"):
+    #     tools.append(competitor_map_search)
+    # return tools
+    return None
 
 
 def _make_agent(spec: dict, llm) -> Agent:

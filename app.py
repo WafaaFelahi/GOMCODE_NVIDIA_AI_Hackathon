@@ -31,6 +31,18 @@ with st.sidebar:
     )
     repo_url = st.text_input("GitHub repo (tech products, optional)", "")
 
+    st.divider()
+    st.markdown("#### ⚙️ Inference Backend")
+    llm_url = os.getenv("LLM_BASE_URL", "")
+    model = os.getenv("MODEL_NAME", "?")
+    if "localhost:8000" in llm_url or "brev" in llm_url.lower():
+        st.success("🟢 NVIDIA GPU (Brev instance)")
+    elif "nvidia" in llm_url:
+        st.success("🟢 NVIDIA NIM API")
+    elif "groq" in llm_url:
+        st.warning("🟡 Groq (fallback)")
+    st.caption(f"Model: `{model}`")
+
     run_btn = st.button("Generate Launch Report", type="primary",
                         disabled=not (business_type and city))
 
@@ -61,7 +73,7 @@ if run_btn:
             business_type=business_type,
             city=city,
             budget=budget,
-            repo_url=repo_url or None,
+            repo_url=str(repo_url) if repo_url else "",
             on_section_done=on_done,
         )
         status.update(label="✅ All agents finished", state="complete", expanded=False)
