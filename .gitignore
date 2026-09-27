@@ -1,0 +1,23 @@
+# Secrets — NEVER push
+.env
+
+# Virtual environment (hundreds of MB — never push)
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+notebooks/
+.ipynb
+
+# CrewAI runtime artifacts
+chromadb/
+db_storage/
+
+# OS files
+.DS_Store
+Thumbs.db
+venv/
