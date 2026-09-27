@@ -1,9 +1,0 @@
-crewai[litellm]
-crewai-tools
-streamlit
-streamlit-folium
-folium
-ddgs
-requests
-python-dotenv
-nest_asyncio
